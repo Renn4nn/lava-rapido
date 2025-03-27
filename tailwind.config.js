@@ -5,7 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        textBlue: "#1F70E0",
+        bgGray: "#363636",
+        colorButton: "#1C77FF"
+      }
+    },
     fontFamily: {
       sans: [
         'sans-serif',
