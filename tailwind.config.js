@@ -6,6 +6,15 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      sans: [
+        'sans-serif',
+        {
+          fontFeatureSettings: '"cv11", "ss01"',
+          fontVariationSettings: '"opsz" 32'
+        },
+      ],
+    },
   },
   plugins: [],
 } 
