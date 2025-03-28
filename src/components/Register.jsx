@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -87,6 +88,7 @@ const Register = () => {
           </div>
         </form>
       </div>
+      <Link to="/login" className="text-white flex justify-center mt-5">Already have an account? Sign in</Link>
     </div>
   );
 };
