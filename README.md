@@ -8,7 +8,7 @@ Segue a estruturação dos arquivos do projeto, mantendo sempre o mesmo **padrã
 
 ### Backend
 
-Neste diretório estão armazenados os arquivos referentes ao **backend**, desenvolvido com **Node.js** e utilizando **MongoDB** como banco de dados. A aplicação backend gerencia a lógica de negócios e a comunicação com o banco de dados.
+Neste diretório estão armazenados os arquivos referentes ao **backend**, desenvolvido com **Node.js** e utilizando **mySQL** como banco de dados. A aplicação backend gerencia a lógica de negócios e a comunicação com o banco de dados.
 
 ### Frontend
 
@@ -22,5 +22,5 @@ Abaixo, o diagrama UML descreve a arquitetura do projeto:
 graph LR
 A[Aplicação Web] --> B((BackEnd))
 A --> C(Frontend)
-B -- Node.js --> D{Banco de Dados MongoDB}
+B -- Node.js --> D{Banco de Dados mySQL}
 C -- React.js --> A
