@@ -9,7 +9,8 @@ export default {
       colors:{
         textBlue: "#1F70E0",
         bgGray: "#363636",
-        colorButton: "#1C77FF"
+        azulButton: "#1C77FF",
+        preto: '#242424'
       }
     },
     fontFamily: {
