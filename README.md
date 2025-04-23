@@ -144,5 +144,5 @@ C -- React.js --> A
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **[Renan](https://github.com/Renn4nn)**, **[Thafnis](https://github.com/Thafniss)** e **[Wilson](https://github.com/WilsonnJr)**🚀
+Desenvolvido por **[Renan](https://github.com/Renn4nn)**, **[Thafnis](https://github.com/Thafniss)**, **[Wilson](https://github.com/WilsonnJr)** 🚀
 
