@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,11 +7,35 @@ const Login = () => {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log("Login attempt:", formData);
+  
+    try {
+      const res = await fetch("http://localhost:8800/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const result = await res.json();
+  
+      if (res.status === 200) {
+
+        navigate("/home");
+      } else {
+        alert(result.message || "Erro ao fazer login");
+      }
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      alert("Erro na requisição.");
+    }
   };
+  
+  
 
   const handleChange = (e) => {
     setFormData({

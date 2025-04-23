@@ -11,6 +11,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+//Tela de todos os usuarios
 app.get('/users',(req, res) => {
     const q = "SELECT * FROM users";
     db.query(q, (err, data) => {
@@ -20,6 +21,7 @@ app.get('/users',(req, res) => {
     })
 })
 
+//Criação de usuario
 app.post('/users', (req, res) => {
     const { name, email, password } = req.body;
     const q = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
@@ -31,6 +33,22 @@ app.post('/users', (req, res) => {
     });
 });
 
+//login do usuario
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+  
+    const q = "SELECT * FROM users WHERE email = ? AND password = ?";
+    db.query(q, [email, password], (err, results) => {
+      if (err) return res.status(500).json({ error: "Erro no servidor." });
+  
+      if (results.length === 0) {
+        return res.status(401).json({ message: "Email ou senha inválidos." });
+      }
+  
+      return res.status(200).json({ message: "Login realizado com sucesso!", user: results[0] });
+    });
+  });
+  
 
 const PORT = 8800;
 app.listen(PORT, () => {
