@@ -9,11 +9,41 @@ const Register = () => {
     name: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration logic here
-    console.log("Registration attempt:", formData);
+  
+    if (formData.password !== formData.confirmPassword) {
+      alert("As senhas não coincidem.");
+      return;
+    }
+  
+    try {
+      const res = await fetch("http://localhost:8800/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+  
+      const result = await res.json();
+  
+      if (res.status === 201) {
+        alert("Usuário registrado com sucesso!");
+        // Aqui você pode redirecionar ou limpar o formulário
+      } else {
+        alert("Erro ao registrar: " + (result.error || "Tente novamente."));
+      }
+    } catch (error) {
+      console.error("Erro ao registrar:", error);
+      alert("Erro na requisição.");
+    }
   };
+  
 
   const handleChange = (e) => {
     setFormData({
