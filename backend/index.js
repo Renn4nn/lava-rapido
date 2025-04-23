@@ -51,6 +51,7 @@ app.post("/login", (req, res) => {
   
 
 const PORT = 8800;
-app.listen(PORT, () => {
+//backend rodando no ip da rede local
+app.listen(PORT, '192.168.0.130', () => {
     console.log(`Rodando servidor na porta ${PORT}`);
 });
