@@ -36,13 +36,22 @@ app.post('/users', (req, res) => {
     });
 });
 
+app.get('/servicosList',(req, res) => {
+    const q = "SELECT * FROM servicos";
+    db.query(q, (err, data) => {
+        if (err) return res.json(err);
+
+        return res.status(200).json(data)
+    })
+})
+
 app.post('/servicos', (req, res) => {
-    const {tipoServico, placa, modelo, preco, cliente, funcionario} = req.body;
-    const q = "INSERT INTO [nome_tabela] (tipo, placa, modelo, preco, cliente, funcionario) VALUES (?, ?, ?, ?, ?, ?)";
+    const { tipoServico, placa, modelo, preco, cliente, funcionario, dataHora } = req.body;
+    const q = "INSERT INTO servicos (tipo_servico, placa, modelo, preco, cliente, funcionario, data_hora) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-    db.query(q, [tipoServico, placa, modelo, preco, cliente, funcionario], (err, result) => {
+    db.query(q, [tipoServico, placa, modelo, preco, cliente, funcionario, dataHora], (err, result) => {
         if (err) return res.status(500).json({ error: err });
-
+        console.log("REGISTRADO")
         return res.status(201).json({message: "Serviço registrado com sucesso!"});
     })
 })
