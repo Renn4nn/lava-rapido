@@ -38,7 +38,7 @@ app.post('/users', (req, res) => {
 
 app.post('/servicos', (req, res) => {
     const {tipoServico, placa, modelo, preco, cliente, funcionario} = req.body;
-    const q = "INSERT INTO x (tipo, placa, modelo, preco, cliente, funcionario) VALUES (?, ?, ?, ?, ?, ?)";
+    const q = "INSERT INTO [nome_tabela] (tipo, placa, modelo, preco, cliente, funcionario) VALUES (?, ?, ?, ?, ?, ?)";
 
     db.query(q, [tipoServico, placa, modelo, preco, cliente, funcionario], (err, result) => {
         if (err) return res.status(500).json({ error: err });
