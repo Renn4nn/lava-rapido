@@ -8,84 +8,124 @@ const Servicos = () => {
   const [servicos, setServicos] = useState([]);
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
+  const [carro, setCarro] = useState("");
+  const [placa, setPlaca] = useState("");
+  const [dono, setDono] = useState("");
 
   const adicionarServico = () => {
-    if (nome.trim() === "" || preco.trim() === "") return;
+    if (
+      nome.trim() === "" ||
+      preco.trim() === "" ||
+      carro.trim() === "" ||
+      placa.trim() === "" ||
+      dono.trim() === ""
+    )
+      return;
 
     const novoServico = {
       id: Date.now(),
       nome,
       preco,
+      carro,
+      placa,
+      dono,
     };
 
     setServicos([...servicos, novoServico]);
     setNome("");
     setPreco("");
+    setCarro("");
+    setPlaca("");
+    setDono("");
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FDFFFC] text-[#283D3B]">
-      <div className="fixed top-0 left-0 w-full bg-[#ffffff] border-b shadow-md z-50 flex items-center h-16 px-4">
+    <div className="min-h-screen flex flex-col text-[#283D3B]">
+      {/* Topbar */}
+      <div className="fixed top-0 left-0 w-full bg-white border-b shadow-md z-50 flex items-center h-16 px-6">
         <button onClick={() => navigate(-1)} className="text-[#283D3B] text-xl p-2">
           <ArrowLeft />
         </button>
-        <h1 className="text-[#283D3B] text-xl font-bold ml-2">Serviços</h1>
+        <h1 className="text-[#283D3B] text-2xl font-bold ml-3">Serviços</h1>
       </div>
 
-      {/* Mini Cadastro no canto esquerdo */}
-      <div className="fixed top-20 left-4 bg-[#67B99A] p-4 rounded-lg shadow-lg w-64">
-        <h2 className="text-[#FDFFFC] font-bold text-lg mb-2">Cadastrar Serviço</h2>
-        <input
-          type="text"
-          placeholder="Nome do serviço"
-          className="w-full p-2 mb-2 rounded bg-[#ffffff] text-black"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Preço (R$)"
-          className="w-full p-2 mb-4 rounded bg-[#ffffff] text-black"
-          value={preco}
-          onChange={(e) => setPreco(e.target.value)}
-        />
-        <button
-          onClick={adicionarServico}
-          className="w-full bg-[#283D3B] text-[#FDFFFC] p-2 rounded-md"
+      {/* Cadastro */}
+      <div className="fixed top-20 left-6 bg-[#67B99A] p-6 rounded-lg shadow-2xl w-96">
+        <h2 className="text-white font-bold text-xl mb-4">Cadastrar Serviço</h2>
+        <div className="space-y-3">
+          <input
+            type="text"
+            placeholder="Nome do serviço"
+            className="w-full p-3 rounded bg-white text-black text-sm"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Preço (R$)"
+            className="w-full p-3 rounded bg-white text-black text-sm"
+            value={preco}
+            onChange={(e) => setPreco(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Carro"
+            className="w-full p-3 rounded bg-white text-black text-sm"
+            value={carro}
+            onChange={(e) => setCarro(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Placa"
+            className="w-full p-3 rounded bg-white text-black text-sm"
+            value={placa}
+            onChange={(e) => setPlaca(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Nome do dono"
+            className="w-full p-3 rounded bg-white text-black text-sm"
+            value={dono}
+            onChange={(e) => setDono(e.target.value)}
+          />
+          <button
+            onClick={adicionarServico}
+            className="w-full bg-[#283D3B] hover:bg-[#1f2f2d] text-white p-3 mt-2 rounded-md font-semibold"
+          >
+            Adicionar
+          </button>
+        </div>
+      </div>
+
+   {/* Lista de serviços (quebra automática de linha) */}
+<div className="pt-24 pl-[26rem] pr-6">
+  <h3 className="text-2xl font-semibold mb-6">Serviços cadastrados</h3>
+  {servicos.length === 0 ? (
+    <p className="text-gray-400">Nenhum serviço cadastrado ainda.</p>
+  ) : (
+    <div className="flex flex-wrap gap-6">
+      {servicos.map((s) => (
+        <div
+          key={s.id}
+          className="bg-[#283D3B] text-white p-6 rounded-lg shadow-lg w-[280px]"
         >
-          Adicionar
-        </button>
-      </div>
-
-      {/* Lista de serviços cadastrados */}
-      <div className="pt-20 px-6 mt-6 ml-72">
-        <h3 className="text-xl font-semibold mb-4">Serviços cadastrados:</h3>
-        {servicos.length === 0 ? (
-          <p className="text-gray-400">Nenhum serviço cadastrado ainda.</p>
-        ) : (
-          <div className="space-y-4">
-            {servicos.map((s) => (
-              <div
-                key={s.id}
-                className="bg-[#283D3B] p-4 rounded-md shadow-md"
-              >
-                <table className="w-full">
-                  <tbody>
-                    <tr>
-                      <td className="text-white font-medium">Nome:</td>
-                      <td className="text-white">{s.nome}</td>
-                    </tr>
-                    <tr>
-                      <td className="text-white font-medium">Preço:</td>
-                      <td className="text-white">R$ {s.preco}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            ))}
+          <h4 className="text-xl font-bold mb-2">{s.nome}</h4>
+          <div className="grid grid-cols-2 gap-y-2 text-sm">
+            <div className="font-medium">Preço:</div>
+            <div>R$ {s.preco}</div>
+            <div className="font-medium">Carro:</div>
+            <div>{s.carro}</div>
+            <div className="font-medium">Placa:</div>
+            <div>{s.placa}</div>
+            <div className="font-medium">Dono:</div>
+            <div>{s.dono}</div>
           </div>
-        )}
-      </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
     </div>
   );
 };
