@@ -1,12 +1,15 @@
-// db.js
 import mysql from "mysql";
+import dotenv from 'dotenv';
+dotenv.config();
 
-// Cria a conexão com o MySQL
+
+//conexão com o MySQL
 export const db = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "root",
-    password: "1234", // Corrigido aqui
-    database: "lava_rapido_users", // Certifique-se que esse banco existe
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS, 
+    database: "lava_rapido_users",
+    port: process.env.DB_PORT || 3000
 });
 
 // Conecta ao banco
@@ -14,7 +17,7 @@ db.connect((err) => {
     if (err) {
         console.error("Erro ao conectar no banco de dados:", err);
     } else {
-        console.log("Conectado ao banco de dados MySQL!");
+        console.log(`Conectado ao banco de dados MySQL na porta ${process.env.DB_PORT}!`);
     }
 });
 

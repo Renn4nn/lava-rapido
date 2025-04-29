@@ -2,6 +2,9 @@
 import express from 'express';
 import cors from 'cors';
 import { db } from './db.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app = express();
 app.use(express.json());
@@ -33,6 +36,17 @@ app.post('/users', (req, res) => {
     });
 });
 
+app.post('/servicos', (req, res) => {
+    const {tipoServico, placa, modelo, preco, cliente, funcionario} = req.body;
+    const q = "INSERT INTO x (tipo, placa, modelo, preco, cliente, funcionario) VALUES (?, ?, ?, ?, ?, ?)";
+
+    db.query(q, [tipoServico, placa, modelo, preco, cliente, funcionario], (err, result) => {
+        if (err) return res.status(500).json({ error: err });
+
+        return res.status(201).json({message: "Serviço registrado com sucesso!"});
+    })
+})
+
 //login do usuario
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
@@ -50,8 +64,7 @@ app.post("/login", (req, res) => {
   });
   
 
-const PORT = 8800;
 //backend rodando no ip da rede local
-app.listen(PORT, '192.168.0.130', () => {
-    console.log(`Rodando servidor na porta ${PORT}`);
+app.listen(process.env.PORT, `${process.env.IP}`, () => {
+    console.log(`Rodando servidor na porta ${process.env.PORT}`);
 });
