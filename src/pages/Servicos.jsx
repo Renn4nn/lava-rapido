@@ -6,6 +6,7 @@ import {
   Calendar,
   Database,
   CircleUser,
+  X
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -139,9 +140,15 @@ const Servicos = () => {
         <div className="flex justify-end w-full pr-6 gap-2">
           <button
             onClick={toggleMenu}
+            className="w-12 h-12 bg-[#C5172E] hover:bg-[#7D0A0A] text-white rounded-md flex items-center justify-center"
+          >
+            <X /> 
+          </button>
+          <button
+            onClick={toggleMenu}
             className="w-12 h-12 bg-[#27548A] hover:bg-[#1f2f2d] text-white rounded-md flex items-center justify-center"
           >
-            <AlignJustify />
+           <AlignJustify />
           </button>
         </div>
       </div>
