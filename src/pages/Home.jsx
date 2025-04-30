@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Menu, Calendar, CircleUser, Database, AlignJustify } from "lucide-react";
+import {
+  Menu,
+  Calendar,
+  CircleUser,
+  Database,
+  AlignJustify,
+} from "lucide-react";
 import { Link } from "react-router-dom";
+import aguaImg from "../assets/dgua.png";
 
 const Home = () => {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -37,7 +44,7 @@ const Home = () => {
                 <Calendar className="text-[#283D3B] mb-1" />
                 <span className="text-sm text-[#283D3B]">Agendamentos</span>
               </Link>
-              <Link to="/servicos" className="flex flex-col items-center">
+              <Link to="/admUsuarios" className="flex flex-col items-center">
                 <Database className="text-[#283D3B] mb-1" />
                 <span className="text-sm text-[#283D3B]">Adm. Usuarios</span>
               </Link>
@@ -48,6 +55,19 @@ const Home = () => {
             </div>
           </motion.div>
         )}
+        <div
+          className="flex flex-col justify-center items-center"
+          style={{ height: "calc(100vh - 4rem)" }}
+        >
+          <img
+            src={aguaImg}
+            alt="Imagem água"
+            className="w-40 h-auto mb-4" // Adicionando margem inferior para separar imagem do texto
+          />
+          <span className="text-lg font-semibold text-[#283D3B]">
+            WashCar
+          </span>
+        </div>
       </div>
     </div>
   );

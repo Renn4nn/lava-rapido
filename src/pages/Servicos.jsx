@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  AlignJustify,
+  Calendar,
+  Database,
+  CircleUser,
+} from "lucide-react";
+import { motion } from "framer-motion";
 
 const Servicos = () => {
   const navigate = useNavigate();
+  const [menuAberto, setMenuAberto] = useState(false);
+  const toggleMenu = () => setMenuAberto(!menuAberto);
 
   const [servicos, setServicos] = useState([]);
-
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
   const [carro, setCarro] = useState("");
@@ -30,7 +38,7 @@ const Servicos = () => {
           });
 
           return {
-            id: s.id, // ou s.id_servico, depende do seu schema
+            id: s.id,
             nome: s.tipo_servico,
             servico: s.tipo_servico,
             preco: s.preco,
@@ -87,7 +95,6 @@ const Servicos = () => {
       if (res.status === 201) {
         alert("Serviço registrado com sucesso!");
 
-        // Atualiza a lista local com o novo serviço
         const novoServico = {
           id: Date.now(),
           nome,
@@ -95,10 +102,11 @@ const Servicos = () => {
           carro,
           placa,
           dono,
+          funcionario,
+          dataHora,
         };
         setServicos([...servicos, novoServico]);
 
-        // Limpa os campos
         setNome("");
         setPreco("");
         setCarro("");
@@ -118,17 +126,71 @@ const Servicos = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col text-[#283D3B]">
+    <div className="min-h-screen flex flex-col text-[#283D3B] relative">
       {/* Topbar */}
       <div className="fixed top-0 left-0 w-full bg-white border-b shadow-md z-50 flex items-center h-16 px-6">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/home")}
           className="text-[#283D3B] text-xl p-2"
         >
           <ArrowLeft />
         </button>
         <h1 className="text-[#283D3B] text-2xl font-bold ml-3">Serviços</h1>
+        <div className="flex justify-end w-full pr-6 gap-2">
+          <button
+            onClick={toggleMenu}
+            className="w-12 h-12 bg-[#27548A] hover:bg-[#1f2f2d] text-white rounded-md flex items-center justify-center"
+          >
+            <AlignJustify />
+          </button>
+        </div>
       </div>
+
+      {/* Menu Animado */}
+      {menuAberto && (
+        <motion.div
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          exit={{ y: -100 }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="fixed top-16 left-0 w-full bg-[#FDFFFC] shadow-xl rounded-b-2xl p-4 z-40"
+        >
+          <div className="grid grid-cols-4 gap-6 text-center">
+            <Link
+              to="/home"
+              className="flex flex-col items-center"
+              onClick={() => setMenuAberto(false)}
+            >
+              <AlignJustify className="text-[#283D3B] mb-1" />
+              <span className="text-sm text-[#283D3B]">Home</span>
+            </Link>
+            <Link
+              to="/servicos"
+              className="flex flex-col items-center"
+              onClick={() => setMenuAberto(false)}
+            >
+              <Calendar className="text-[#283D3B] mb-1" />
+              <span className="text-sm text-[#283D3B]">Agendamentos</span>
+            </Link>
+            <Link
+              to="/admUsuarios"
+              className="flex flex-col items-center"
+              onClick={() => setMenuAberto(false)}
+            >
+              <Database className="text-[#283D3B] mb-1" />
+              <span className="text-sm text-[#283D3B]">Adm. Usuarios</span>
+            </Link>
+            <Link
+              to="/perfil"
+              className="flex flex-col items-center"
+              onClick={() => setMenuAberto(false)}
+            >
+              <CircleUser className="text-[#283D3B] mb-1" />
+              <span className="text-sm text-[#283D3B]">Perfil</span>
+            </Link>
+          </div>
+        </motion.div>
+      )}
 
       {/* Cadastro */}
       <div className="fixed top-20 left-6 bg-[#67B99A] p-6 rounded-lg shadow-2xl w-96">
