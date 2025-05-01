@@ -15,7 +15,7 @@ app.use(cors({
 }));
 
 //Tela de todos os usuarios
-app.get('/users',(req, res) => {
+app.get('/users', (req, res) => {
     const q = "SELECT * FROM users";
     db.query(q, (err, data) => {
         if (err) return res.json(err);
@@ -36,7 +36,46 @@ app.post('/users', (req, res) => {
     });
 });
 
-app.get('/servicosList',(req, res) => {
+app.post('/removerServicos', (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ error: "ID do serviço é obrigatório" });
+    }
+
+    const q = "DELETE FROM servicos WHERE id = ?";
+    db.query(q, [id], (err, result) => {
+        if (err) {
+            console.error("Erro ao excluir serviço:", err);
+            return res.status(500).json({ error: "Erro ao excluir serviço" });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Serviço não encontrado" });
+        }
+
+        console.log("Serviço excluído com sucesso");
+        return res.status(200).json({ message: "Serviço excluído com sucesso" });
+    });
+});
+
+app.delete('/removerTodosServicos', (req, res) => {
+    const q = "DELETE FROM servicos";
+
+    db.query(q, (err, result) => {
+        if (err) {
+            console.error("Erro ao excluir todos os serviços:", err);
+            return res.status(500).json({ error: "Erro ao excluir todos os serviços" });
+        }
+
+        console.log("Todos os serviços foram excluídos.");
+        return res.status(200).json({ message: "Todos os serviços foram excluídos com sucesso" });
+    });
+});
+
+
+
+app.get('/servicosList', (req, res) => {
     const q = "SELECT * FROM servicos";
     db.query(q, (err, data) => {
         if (err) return res.json(err);
@@ -52,26 +91,26 @@ app.post('/servicos', (req, res) => {
     db.query(q, [tipoServico, placa, modelo, preco, cliente, funcionario, dataHora], (err, result) => {
         if (err) return res.status(500).json({ error: err });
         console.log("REGISTRADO")
-        return res.status(201).json({message: "Serviço registrado com sucesso!"});
+        return res.status(201).json({ message: "Serviço registrado com sucesso!" });
     })
 })
 
 //login do usuario
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
-  
+
     const q = "SELECT * FROM users WHERE email = ? AND password = ?";
     db.query(q, [email, password], (err, results) => {
-      if (err) return res.status(500).json({ error: "Erro no servidor." });
-  
-      if (results.length === 0) {
-        return res.status(401).json({ message: "Email ou senha inválidos." });
-      }
-  
-      return res.status(200).json({ message: "Login realizado com sucesso!", user: results[0] });
+        if (err) return res.status(500).json({ error: "Erro no servidor." });
+
+        if (results.length === 0) {
+            return res.status(401).json({ message: "Email ou senha inválidos." });
+        }
+
+        return res.status(200).json({ message: "Login realizado com sucesso!", user: results[0] });
     });
-  });
-  
+});
+
 
 //backend rodando no ip da rede local
 app.listen(process.env.PORT, `${process.env.IP}`, () => {

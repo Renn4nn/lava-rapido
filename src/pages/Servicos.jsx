@@ -139,7 +139,7 @@ const Servicos = () => {
         <h1 className="text-[#283D3B] text-2xl font-bold ml-3">Serviços</h1>
         <div className="flex justify-end w-full pr-6 gap-2">
           <button
-            onClick={toggleMenu}
+            onClick={() => navigate("/excluirServicos")}
             className="w-12 h-12 bg-[#C5172E] hover:bg-[#7D0A0A] text-white rounded-md flex items-center justify-center"
           >
             <X /> 
