@@ -6,7 +6,8 @@ import {
   Calendar,
   Database,
   CircleUser,
-  X
+  X,
+  Pencil
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -138,6 +139,12 @@ const Servicos = () => {
         </button>
         <h1 className="text-[#283D3B] text-2xl font-bold ml-3">Serviços</h1>
         <div className="flex justify-end w-full pr-6 gap-2">
+          <button
+            onClick={() => navigate("/editarServicos")}
+            className="w-12 h-12 bg-[#32a8db] hover:bg-[#3793C4] text-white rounded-md flex items-center justify-center"
+          >
+            <Pencil /> 
+          </button>
           <button
             onClick={() => navigate("/excluirServicos")}
             className="w-12 h-12 bg-[#C5172E] hover:bg-[#7D0A0A] text-white rounded-md flex items-center justify-center"

@@ -111,6 +111,10 @@ app.post("/login", (req, res) => {
     });
 });
 
+app.put("/editarServico", (req, res) => {
+    const { id } = req.body;
+})
+
 
 //backend rodando no ip da rede local
 app.listen(process.env.PORT, `${process.env.IP}`, () => {

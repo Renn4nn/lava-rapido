@@ -6,6 +6,7 @@ import Perfil from "./pages/Perfil";
 import AdmUsuario from "./pages/AdmUsuarios";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import ExcluirServico from "./pages/ExcluirServico";
+import EditarServico from "./pages/EditarServico"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/admUsuarios" element={<AdmUsuario />} />
         <Route path="/excluirServicos" element={<ExcluirServico />} />
         <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/editarServico" element={<EditarServico />} />
       </Routes>
     </Router>
     </div>
