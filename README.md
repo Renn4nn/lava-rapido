@@ -47,35 +47,80 @@ npm install
 
 ## ⚙️ Configuração do Backend
 
-### 3⃣ Altere o IP no `index.js` para seu IP da rede local:
+### 3⃣ Crie o arquivo `.env`
 
-No arquivo `backend/index.js`, substitua o `app.listen()` por:
+Dentro da pasta `backend/`, crie um arquivo chamado `.env` com o seguinte conteúdo:
 
-```js
-app.listen(PORT, '192.168.0.130', () => {
-    console.log(`Rodando servidor na porta ${PORT}`);
-});
+```env
+# Dados do banco de dados
+DB_PORT=3306
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=1234
+
+# Dados do servidor backend
+PORT=8800
+IP=localhost
 ```
 
-> ✅ Dica: use `ipconfig` no terminal (Windows) para descobrir seu IP local.
+### 4⃣ Certifique-se de que o backend usa essas variáveis
+
+No arquivo `backend/index.js`, adicione:
+
+```js
+require('dotenv').config();
+
+app.listen(process.env.PORT, process.env.IP, () => {
+    console.log(`Rodando servidor na porta ${process.env.PORT}`);
+});
+```
 
 ---
 
 ## 🔄 Execução do Projeto
 
-### 4⃣ Inicie o servidor backend
+### 5⃣ Crie a base de dados MySQL
 
-Ainda dentro da pasta `backend`, rode:
+Execute no seu MySQL:
+
+```sql
+CREATE DATABASE lava_rapido_users;
+USE lava_rapido_users;
+
+-- Criação da tabela de usuários
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela de serviços
+CREATE TABLE servicos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo_servico VARCHAR(100) NOT NULL,
+    placa VARCHAR(20) NOT NULL,
+    modelo VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    cliente VARCHAR(100) NOT NULL,
+    funcionario VARCHAR(100) NOT NULL,
+    data_hora DATETIME NOT NULL
+);
+```
+
+---
+
+### 6⃣ Inicie o servidor backend
+
+Dentro da pasta `backend`:
 
 ```bash
 npm start
 ```
 
-> ⚠️ Obs: é necessário que você já tenha o **MySQL** instalado com a base de dados pronta.
-
 ---
 
-### 5⃣ Inicie o frontend (React)
+### 7⃣ Inicie o frontend (React)
 
 Volte para a raiz do projeto:
 
@@ -93,10 +138,14 @@ npm run dev
   http://localhost:5173
   ```
 
-- Ou de outro dispositivo na **mesma rede local**:
-  ```
-  http://<seu_ip_local>:5173
-  ```
+---
+
+## 📦 Base de Dados (MySQL)
+
+Resumo das tabelas utilizadas:
+
+- **users**: cadastro de usuários com `id`, `name`, `email`, `password`
+- **servicos**: registro dos serviços com `tipo_servico`, `placa`, `modelo`, `preco`, `cliente`, `funcionario`, `data_hora`
 
 ---
 
@@ -130,13 +179,11 @@ O diretório **frontend** contém os arquivos do **client-side**, desenvolvido e
 
 ### Diagrama UML
 
-Abaixo, o diagrama UML descreve a arquitetura do projeto:
-
 ```mermaid
 graph LR
 A[Aplicação Web] --> B((BackEnd))
 A --> C(Frontend)
-B -- Node.js --> D{Banco de Dados mySQL}
+B -- Node.js --> D{Banco de Dados MySQL}
 C -- React.js --> A
 ```
 
@@ -145,4 +192,3 @@ C -- React.js --> A
 ## 👨‍💻 Autor
 
 Desenvolvido por **[Renan](https://github.com/Renn4nn)**, **[Thafnis](https://github.com/Thafniss)**, **[Wilson](https://github.com/WilsonnJr)** 🚀
-
